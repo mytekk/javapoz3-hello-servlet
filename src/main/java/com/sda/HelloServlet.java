@@ -39,26 +39,26 @@ public class HelloServlet extends HttpServlet {
 
     private void addResponse(PrintWriter writer) {
         writer.println("<h1>Add</h1>");
-        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/add\">");
+        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/calc/add\">");
         writer.println("<input type=\"number\" name=\"first\">");
         writer.println("<input type=\"number\" name=\"second\">");
         writer.println("<input type=\"submit\">");
         writer.println("</form>");
         writer.println("<h1>Subtract</h1>");
-        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/subtract\">");
+        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/calc/subtract\">");
         writer.println("<input type=\"number\" name=\"first\">");
         writer.println("<input type=\"number\" name=\"second\">");
         writer.println("<input type=\"submit\">");
         writer.println("</form>");
         writer.println("<h1>Multiply</h1>");
-        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/multiply\">");
+        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/calc/multiply\">");
         writer.println("<input type=\"number\" name=\"first\">");
         writer.println("<input type=\"number\" name=\"second\">");
         writer.println("<input type=\"submit\">");
         writer.println("</form>");
         writer.println("<h1>Divide</h1>");
-        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/divide\">");
-        writer.println("<input type=\"number\" name=\" \">");
+        writer.println("<form method=\"get\" action=\"/hello-servlets-1.0-SNAPSHOT/calc/divide\">");
+        writer.println("<input type=\"number\" name=\"first\">");
         writer.println("<input type=\"number\" name=\"second\">");
         writer.println("<input type=\"submit\">");
         writer.println("</form>");

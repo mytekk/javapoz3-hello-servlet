@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Created by RENT on 2017-06-08.
+ *
+ * klasa konkretnie określająca sposób wyświetlania danych w HTML
  */
 public class TodoViewHtml implements TodoView {
     @Override

@@ -11,10 +11,13 @@ import java.util.stream.Stream;
 
 /**
  * Created by RENT on 2017-06-08.
+ *
+ * główna klasa z servletem
  */
 public class TodoServlet extends HttpServlet {
 
     private TodoDao todoDao;
+    private TodoView todoView;
 
     //wywolywane po utworzeniu obiektu, odpowiednik before w testach
     //jest po to, zeby nie trzeba bylo za kazdym nowym requestem
@@ -24,6 +27,7 @@ public class TodoServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         todoDao = new TodoDaoMock();
+        todoView = new TodoViewHtml();
     }
 
     @Override
@@ -32,7 +36,8 @@ public class TodoServlet extends HttpServlet {
         resp.setContentType("text/html; ISO-8859-1");
         List<TodoModel> allTodos = todoDao.getAllTodos();
 
-
-
+        String todosView = todoView.show(allTodos); //zwraca stringa z wszystimi todosami w formacie html
+        //System.out.println(todosView); //wypisanie todosow htmlowych do logów
+        writer.print(todosView);
     }
 }

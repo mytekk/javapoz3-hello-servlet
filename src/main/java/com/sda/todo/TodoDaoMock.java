@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Created by RENT on 2017-06-08.
  *
- * wlasciwa klasa implementujaca interfejs
+ * wlasciwa klasa implementujaca interfejs TodoDao
+ * ta klasa właściwie implementuje sposódostępu do mockowych danych
  */
 public class TodoDaoMock implements TodoDao {
 

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 /**
  * Created by RENT on 2017-06-08.
+ *
+ * to jest klasa opisujaca jedno zadaniedo wykonania, jedno "todo"
  */
 public class TodoModel {
 

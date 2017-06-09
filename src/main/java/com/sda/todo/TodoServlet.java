@@ -19,6 +19,9 @@ public class TodoServlet extends HttpServlet {
     private TodoDao todoDao;
     private TodoView todoView;
 
+    //instancja łańcucha
+    private TodoChain todoChain;
+
     //wywolywane po utworzeniu obiektu, odpowiednik before w testach
     //jest po to, zeby nie trzeba bylo za kazdym nowym requestem
     //budowac listy wszystkich todos
@@ -28,16 +31,13 @@ public class TodoServlet extends HttpServlet {
     public void init() throws ServletException {
         todoDao = new TodoDaoMock();
         todoView = new TodoViewHtml();
+        todoChain = new TodoChain(todoView, todoDao);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("text/html; ISO-8859-1");
-        List<TodoModel> allTodos = todoDao.getAllTodos();
-
-        String todosView = todoView.show(allTodos); //zwraca stringa z wszystimi todosami w formacie html
-        //System.out.println(todosView); //wypisanie todosow htmlowych do logów
-        writer.print(todosView);
+        writer.println(todoChain.invoke(req.getPathInfo()));
     }
 }

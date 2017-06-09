@@ -28,6 +28,7 @@ public class TodoChain {
     //póki co mamy jeden - wyświetlanie wszystkich todosów
     private void init() {
         chainElements.add(new AllTodosChainElement("/all", todoDao, todoView));
+        chainElements.add(new AddTodoChainElement("/add", todoDao, todoView));
     }
 
     //metoda do pobudzania łańcucha

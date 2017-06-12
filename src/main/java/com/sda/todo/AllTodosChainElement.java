@@ -1,5 +1,7 @@
 package com.sda.todo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ public class AllTodosChainElement extends AbstractTodoChainElementModel {
         super(path, todoDao, todoView);
     }
 
-    public String action() {
+    public String action(HttpServletRequest req, HttpServletResponse resp) {
         //pobieram wszystkie todosy i zwracam w odpowiedniej formie (np. duży string )
         List<TodoModel> allTodos = todoDao.getAllTodos();
         return todoView.show(allTodos);

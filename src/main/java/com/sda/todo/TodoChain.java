@@ -1,5 +1,7 @@
 package com.sda.todo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +34,7 @@ public class TodoChain {
     }
 
     //metoda do pobudzania łańcucha
-    public String invoke(String path) {
+    public String invoke(HttpServletRequest req, HttpServletResponse resp) {
         //szukamy, ktora implementacja obsluzy zadana sciezke
         Iterator<TodoChainElement> iterator = chainElements.iterator();
         boolean flag = false;
@@ -42,18 +44,18 @@ public class TodoChain {
         //i szukam tego, ktory jest odpowiedzialny za obsluge mojej sciazki
         while (!flag && iterator.hasNext()) {
             TodoChainElement nextElement = iterator.next();//pobieram element
-            if (nextElement.isMyResponsibility(path)) { //czyobsluzy zapoytanie?
+            if (nextElement.isMyResponsibility(req.getPathInfo())) { //czy obsluzy zapytanie?
                 finalElement = nextElement;
                 flag = true;
             }
         }
         //jak znajde to wykonuje metode invoke i przekazuję znaleziony odpowiedzialny element
-        return invoke(finalElement);
+        return invoke(finalElement, req, resp);
     }
 
-    private String invoke(TodoChainElement chainElement) {
+    private String invoke(TodoChainElement chainElement, HttpServletRequest req, HttpServletResponse resp) {
         if (chainElement != null) {
-            return chainElement.action();
+            return chainElement.action(req, resp);
         } else {
             return "<h1>Cannot find page!</h1>";
         }

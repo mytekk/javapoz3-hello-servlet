@@ -31,13 +31,13 @@ public class TodoServlet extends HttpServlet {
     public void init() throws ServletException {
         todoDao = new TodoDaoMock();
         todoView = new TodoViewHtml();
-        todoChain = new TodoChain(todoView, todoDao);
+        todoChain = new TodoChain(todoView, todoDao); //obiekt łańcucha!
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("text/html; ISO-8859-1");
-        writer.println(todoChain.invoke(req.getPathInfo()));
+        writer.println(todoChain.invoke(req, resp)); //to co w nawiasie to serce logiki
     }
 }

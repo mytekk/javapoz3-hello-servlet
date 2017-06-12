@@ -24,6 +24,10 @@ public class AddTodoChainElement extends AbstractTodoChainElementModel {
             TodoModel newTodoModel = TodoMapper.map(req);
             //zapisuje go
             todoDao.addTodo(newTodoModel);
+            //po zapisie przekierowujemy sie na strone z lista wszystkich todosow
+            //dopisujemy status i header-location do response
+            resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+            resp.setHeader("Location", "/hello-servlets-1.0-SNAPSHOT/todo/all");
         } else {
             //przyszedl pusty request, wiec tutaj zwracam
             //stringa z htmlmowym formularzem dodawania nowego todosa

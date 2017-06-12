@@ -14,6 +14,9 @@ public class TodoViewHtml implements TodoView {
     public String show(List<TodoModel> todos) {
         StringBuilder stringBuilder = new StringBuilder();
 
+        stringBuilder.append("<a href=\"/hello-servlets-1.0-SNAPSHOT/todo/all\">All</a></br>");
+        stringBuilder.append("<a href=\"/hello-servlets-1.0-SNAPSHOT/todo/add\">Add</a></br>");
+
         stringBuilder.append("<ul>");
 
         todos.stream()

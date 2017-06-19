@@ -1,0 +1,5 @@
+jeden
+dwa
+trzy
+cztery
+pięć

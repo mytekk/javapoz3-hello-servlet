@@ -29,11 +29,13 @@ public class TodoServlet extends HttpServlet {
     //doGet (za kazdym requestem) co byloby nieefektywne
     @Override
     public void init() throws ServletException {
-        todoDao = new TodoDaoMock();
+        //todoDao = new TodoDaoMock();
+        todoDao = new TodoDaoFile(getServletContext(), "/todo/data"); //przekazuje kontekst servletu i sciezke do pliku
         todoView = new TodoViewHtml();
         todoChain = new TodoChain(todoView, todoDao); //obiekt łańcucha!
     }
 
+    //ta metoda obsluguje zapytanie GET tego servletu
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();

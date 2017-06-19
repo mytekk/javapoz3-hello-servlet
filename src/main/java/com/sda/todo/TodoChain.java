@@ -27,7 +27,8 @@ public class TodoChain {
     }
 
     //ta metoda wypełnia naszą listę dostępnych elementów łańcucha odpowiedzialności
-    //póki co mamy jeden - wyświetlanie wszystkich todosów
+    //tutaj ustawiamy elementy łańcicha
+    //kolejnosc ma znaczenie!
     private void init() {
         chainElements.add(new AllTodosChainElement("/all", todoDao, todoView));
         chainElements.add(new AddTodoChainElement("/add", todoDao, todoView));

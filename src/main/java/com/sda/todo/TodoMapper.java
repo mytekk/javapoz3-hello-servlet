@@ -72,4 +72,22 @@ public class TodoMapper {
     public static TodoModel map(Scanner scanner) {
         return map(scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine(), scanner.nextLine());
     }
+
+    //zamienia todosa na 5-linijkowy string gotowy do wrzucenia pozniej do pliku
+    public static String map(TodoModel model) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(model.getName())
+                .append("\r\n")
+                .append(model.getDescription())
+                .append("\r\n")
+                .append(String.valueOf(model.isChecked()))
+                .append("\r\n")
+                .append(model.getPriority())
+                .append("\r\n")
+                .append(model.getDate().toString())
+                .append("\r\n");
+
+        return stringBuilder.toString();
+    }
+
 }

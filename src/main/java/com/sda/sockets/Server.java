@@ -16,32 +16,32 @@ public class Server {
     public static void main(String[] args) throws IOException {
 
         ServerSocket serverSocket = new ServerSocket(1234); //otwieramy drzwi i czekamy na polaczenia (nasluchujemy)
-        System.out.println("Waiting fo rconnection");
+        System.out.println("Waiting for connection");
 
-        Socket socket = serverSocket.accept(); //jak ktos sie podlaczy, to ustanawiana jest
-        //dwukierunkowa komunikacja. Zwracana jest zmienna socket symbolizujaca ten kanał.
-        //tutaj prpgram sie zawiesza i czeka az jakis Client sie podlaczy
-        //jak ktos sie podlaczy, to blokada jest zwalniana
+        Socket socket = serverSocket.accept(); //tutaj prpgram sie zawiesza i czeka az jakis Client sie podlaczy
+        //jak ktos sie podlaczy, to ustanawiana jest
+        //dwukierunkowa komunikacja. Wtedy zwracana jest zmienna socket symbolizujaca ten kanał.
+        //jak ktos sie podlaczy, to blokada jest zwalniana i wypisany zostanie ponizszy komunikat
         System.out.println("Connection established");
 
-        //skaner do czytania tego co nas przychodzi
+        //skaner do czytania tego co do nas przychodzi, czyli skaner tego co przychodzi do nas od Clienta
         Scanner scanner = new Scanner(socket.getInputStream());
 
         //writer wypisuje na zewnatrz cos co bedziemy chcieli wyslac
         //socket.getOutputStream - strumien wyjsciowy od nas
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-        //skaner do usera
+        //skaner do usera "lokalnego", skaner do wpisywania tego co my bedziemy wysylac
         Scanner scannerToUser = new Scanner(System.in);
 
         boolean flag = true;
         while (flag) {
             String input = scanner.nextLine(); //czeka dopoki nie pojawi sie nowa linia z Klienta
-            System.out.println("Received message: " + input);
+            System.out.println("Received message: " + input); //wypisuje otrzymana wiadomosc
 
-            writer.write(scannerToUser.nextLine() + "\n");
+            writer.write(scannerToUser.nextLine() + "\n"); //czeka na podanie naszego tekstu
             //System.out.println("Flushing output");
-            writer.flush(); //faktyczne wysłanie na strumien wyjsciowy
+            writer.flush(); //faktyczne wysłanie naszego tekstu na strumien wyjsciowy
         }
 
         socket.close();

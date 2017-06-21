@@ -12,24 +12,24 @@ import java.util.Scanner;
 public class Client {
     public static void main(String[] args) throws IOException {
 
-        Socket socket = new Socket("localhost", 1234); //tworzymy socket, klassa sluzaca do podłączania sie do serwera
+        Socket socket = new Socket("localhost", 1234); //tworzymy socket; klasa Socket sluzy do podłączania sie do serwera
 
-        //chcemy cos nadać na zewnatrz
-        //writer bedzie wypisywal od nas na zewnatrz
+        //writer wypisuje na zewnatrz cos co bedziemy chcieli wyslac
+        //socket.getOutputStream - strumien wyjsciowy od nas
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-        //skaner do tego co do nas przychodzi
+        //skaner do czytania tego co do nas przychodzi, czyli skaner tego co przychodzi do nas od Servera
         Scanner scanner = new Scanner(socket.getInputStream());
 
-        //skaner dla usera
+        //skaner do usera "lokalnego", skaner do wpisywania tego co my bedziemy wysylac
         Scanner scannerToUser = new Scanner(System.in);
 
         boolean flag = true;
         while (flag) {
             //pobieramy tekst od usera i wysylamy na socket
             System.out.print("Napisz wiadomosc: ");
-            writer.write(scannerToUser.nextLine() + "\n");
-            writer.flush();
+            writer.write(scannerToUser.nextLine() + "\n");  //czeka na podanie naszego tekstu
+            writer.flush(); //faktyczne wysłanie naszego tekstu na strumien wyjsciowy
 
             System.out.println("Received message: ");
             System.out.println(scanner.nextLine()); //czeka dopoki nie pojawi sie nowa linia z Serwera

@@ -21,66 +21,78 @@ public class KikClient {
 
         boolean flag = true;
         System.out.println("Waiting for first move from serwer");
-        while (flag) {
-            //zaczytanie pozycji od gracza-serwera
-            String oponentPosition = socketIn.nextLine();
+        while (!board.isGameFinished()) {
 
-            //dodanie pozycji do tablicy
-            Integer position = Integer.valueOf(oponentPosition);
-            board.addMove(position, "X");
-
-            //wyswietlenie tablicy
-            System.out.println("Updated board from serwer");
-            System.out.println(board);
-
-            //sprawdzenie, czy po od serwera nie nastapil koniec gry
-            //jesli nastapil, to wychodze z gry
-            flag = !board.isGameFinished();
-            if (!flag) {
-                if (board.getNumberOfSuccessfulMoves() == 9) System.out.println("End of game - draw."); else System.out.println("End of game! You have lost :(");
-                break;
-            }
-
-            boolean status;
-            do {
-                //klient podaje swoja pozycje
-                System.out.println("Insert position: ");
-
-                //przerabiam podana pozycje na Integer
-                String ourPosition = scanner.nextLine();
-                Integer ourPositionNumber = Integer.valueOf(ourPosition);
-
-                //próba dodania pozycji do tablicy
-                status = board.addMove(ourPositionNumber, "O");
-                if (status) {
-                    //udało sie, wiec wyslanie naszje pozycji userowi-serwerowi
-                    socketOut.write(ourPositionNumber + "\n");
-                    socketOut.flush();
-
-                    //sprawdzenie, czy po moim rochu nie nastapil koniec gry
-                    //jesli nastapil, to wychodze z gry
-                    flag = !board.isGameFinished();
-                    if (!flag) {
-                        if (board.getNumberOfSuccessfulMoves() == 9) System.out.println("End of game - draw."); else System.out.println("End of game! You win!");
-                        break; //wyjscie z wewnetrznej petli
-                    }
-
-                } else {
-                    System.out.println("Invalid position, insert again: ");
-                }
-            } while (!status);
-
-            //wyslanie naszje pozycji userowi-serwerowi
-            //socketOut.write(ourPositionNumber + "\n");
-            //socketOut.flush();
-
-            //wyswietlenie zaktualizowanego boardu
             System.out.println("Current board:");
             System.out.println(board);
 
-
+            if (board.getNumberOfSuccessfulMoves() % 2 == 1) {
+                yourTurn(socketOut, scanner, board);
+            } else {
+                opponentsTurn(socketIn, board);
+            }
 
         }
+        System.out.println("Final board:");
+        System.out.println(board);
 
+    }
+
+    private static void yourTurn(BufferedWriter socketOut, Scanner scanner, Board board) throws IOException {
+        boolean status;
+        do {
+            //klient podaje swoja pozycje
+            System.out.println("Insert position: ");
+
+            //przerabiam podana pozycje na Integer
+            String ourPosition = scanner.nextLine();
+            Integer ourPositionNumber = Integer.valueOf(ourPosition);
+
+            //próba dodania pozycji do tablicy
+            status = board.addMove(ourPositionNumber, "O");
+            if (status) {
+                //udało sie, wiec wyslanie naszje pozycji userowi-serwerowi
+                socketOut.write(ourPositionNumber + "\n");
+                socketOut.flush();
+
+                //sprawdzenie, czy po moim rochu nie nastapil koniec gry
+                //jesli nastapil, to wychodze z gry
+                /*
+                flag = !board.isGameFinished();
+                if (!flag) {
+                    String message = (board.getNumberOfSuccessfulMoves() == 9) ? "End of game - draw." : "End of game! You win!";
+                    System.out.println(message);
+                    break; //wyjscie z wewnetrznej petli
+                }
+                */
+
+            } else {
+                System.out.println("Invalid position, insert again: ");
+            }
+        } while (!status);
+    }
+
+    private static void opponentsTurn(Scanner socketIn, Board board) {
+        //zaczytanie pozycji od gracza-serwera
+        String oponentPosition = socketIn.nextLine();
+
+        //dodanie pozycji do tablicy
+        Integer position = Integer.valueOf(oponentPosition);
+        board.addMove(position, "X");
+
+        //wyswietlenie tablicy
+        //System.out.println("Updated board from serwer");
+        //System.out.println(board);
+
+        //sprawdzenie, czy po od serwera nie nastapil koniec gry
+        //jesli nastapil, to wychodze z gry
+            /*
+            flag = !board.isGameFinished();
+            if (!flag) {
+                String message = (board.getNumberOfSuccessfulMoves() == 9) ? "End of game - draw." : "End of game! You have lost :(";
+                System.out.println(message);
+                break;
+            }
+            */
     }
 }

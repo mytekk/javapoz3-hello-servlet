@@ -28,8 +28,8 @@ public class Board {
         boolean valueToReturn = false;
         if (checkRange(position) && isPositionEmpty(position)) {
             array[position - 1] = String.valueOf(sign);
+            numberOfSuccessfulMoves++; //podbijam licznik zajetych pol na tablicy
             valueToReturn = true;
-            numberOfSuccessfulMoves++;
         }
         return valueToReturn;
     }

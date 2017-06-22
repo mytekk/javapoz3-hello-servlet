@@ -6,9 +6,16 @@ package com.sda.kik;
 public class Board {
 
     private String[] array;
+    private int numberOfSuccessfulMoves;
 
     public Board() {
+
         this.array = new String[9];
+        this.numberOfSuccessfulMoves  = 0;
+    }
+
+    public int getNumberOfSuccessfulMoves() {
+        return numberOfSuccessfulMoves;
     }
 
     /**
@@ -22,6 +29,7 @@ public class Board {
         if (checkRange(position) && isPositionEmpty(position)) {
             array[position - 1] = String.valueOf(sign);
             valueToReturn = true;
+            numberOfSuccessfulMoves++;
         }
         return valueToReturn;
     }
@@ -35,15 +43,17 @@ public class Board {
     }
 
     public boolean isGameFinished() {
-        return false;
+        //wystarczy, ze ktorys z elementow bedzie true, wtedy gra sie konczy
+        return isFullfilled() || checkRows() || checkColumns() || checkDiagonals();
     }
 
     //czy bylo juz 9 ruchow?
     private boolean isFullfilled() {
-        return false;
+
+        return numberOfSuccessfulMoves == 9;
     }
 
-    //porownuje czy elementy i j k sa sobie rowne
+    //porownuje czy elementy array[i], array[j], array[k] sa sobie rowne
     private boolean areValuesEquals(int i, int j, int k) {
         return array[i] != null && array[i].equals(array[j]) && array[i].equals(array[k]);
         //to pierwsze sprawdzenie zabezpiecza nas przed porownywaniem nulla do czegos
@@ -52,6 +62,8 @@ public class Board {
 
     //czy jest jakis wiersz z wszystkimi takimi samymi wartosciami?
     private boolean checkRows() {
+        //tak dobieramy iterator i przekazywane wartosci, ze beda
+        //trzy iteracje i w kazdej dostane wspolrzedne kolejnego wiersza
         boolean flag = false;
         int i = 0;
         do {
@@ -63,15 +75,25 @@ public class Board {
 
     //czy jest jakas kolumna z wszystkimi takimi samymi wartosciami?
     private boolean checkColumns() {
-        return false;
+        //tak dobieramy iterator i przekazywane wartosci, ze beda
+        //trzy iteracje i w kazdej dostane wspolrzedne kolejnej kolumny
+        boolean flag = false;
+        int i = 0;
+        do {
+            flag = areValuesEquals(i, i+3, i+6);
+            i+=1;
+        } while (i<3 && !flag);
+        return flag;
     }
 
     private boolean checkFirstDiagonal() {
-        return (array[0] == array[4] && array[0] == array[8]);
+
+        return areValuesEquals(0, 4, 8);
     }
 
     private boolean checkSecondDiagonal() {
-        return (array[2] == array[4] && array[2] == array[6]);
+
+        return areValuesEquals(2, 4, 6);
     }
 
     //czy jest jakas przekatna z wszystkimi takimi samymi wartosciami?

@@ -30,7 +30,7 @@ public class KikServer {
         System.out.println("You are first");
         boolean status;
 
-        while (true) {
+        while (flag) {
             //wyswietlenie tablicy
             System.out.println("Updated board from client:");
             System.out.println(board.toString());
@@ -53,14 +53,38 @@ public class KikServer {
                     //wysylamy klientowi pozycje, ktora wybralismy
                     socketOut.write(number + "\n");
                     socketOut.flush();
+
+                    //sprawdzenie, czy po moim rochu nie nastapil koniec gry
+                    //jesli nastapil, to wychodze z gry
+                    flag = !board.isGameFinished();
+                    if (!flag) {
+                        //(board.getNumberOfSuccessfulMoves() == 9) ? System.out.println("End of game! remis!") : System.out.println("End of game! You win!");
+                        if (board.getNumberOfSuccessfulMoves() == 9) System.out.println("End of game - draw."); else System.out.println("End of game! You win!");
+                        break; //wyjscie z wewnetrznej petli
+                    }
+
                 } else {
                     System.out.println("Invalid position, insert again: ");
                 }
             } while (!status);
 
+            //jesli wygralem, to kolejnej iteracji zewnetrznej petli nie bedzie
+            //bo zmienilem zmienna flag
+            //ale nie chce tez, zeby obecna iteracja sie dokonczyla
+            //wiec w takiej sytuacji tutaj dodatkowo przerywam zewnetrzna petle
+            if (!flag) break;
+
             //czekamy na pozycje od klienta i te pozycje wpisujemy na board i zaznaczamy koleczkiem
             String oponentPosition = socketIn.nextLine();
             board.addMove(Integer.valueOf(oponentPosition), "O");
+
+            //sprawdzenie, czy po moim rochu od klienta koniec gry
+            //jesli nastapil, to wychodze z gry
+            flag = !board.isGameFinished();
+            if (!flag) {
+                if (board.getNumberOfSuccessfulMoves() == 9) System.out.println("End of game - draw."); else System.out.println("End of game! You have lost :(");
+                break;
+            }
 
         }
 

@@ -1,4 +1,4 @@
-package com.sda.kik;
+package com.sda.sockets.kik;
 
 /**
  * Created by RENT on 2017-06-20.

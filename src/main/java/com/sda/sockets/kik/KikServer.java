@@ -1,8 +1,7 @@
-package com.sda.kik;
+package com.sda.sockets.kik;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;

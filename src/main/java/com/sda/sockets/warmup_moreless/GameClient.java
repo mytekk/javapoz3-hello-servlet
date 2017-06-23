@@ -1,4 +1,4 @@
-package com.sda.warmup.moreless;
+package com.sda.sockets.warmup_moreless;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

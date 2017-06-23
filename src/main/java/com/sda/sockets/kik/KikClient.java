@@ -1,4 +1,4 @@
-package com.sda.kik;
+package com.sda.sockets.kik;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

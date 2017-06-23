@@ -1,4 +1,4 @@
-package com.sda.sockets;
+package com.sda.sockets.message_exchanger;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

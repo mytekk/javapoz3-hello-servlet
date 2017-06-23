@@ -1,4 +1,4 @@
-package com.sda.homework;
+package com.sda.sockets.homework_sum_5_numbers;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

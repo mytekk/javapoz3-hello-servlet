@@ -17,72 +17,65 @@ import java.util.Scanner;
 public class KikServer {
     public static void main(String[] args) throws IOException {
 
+        //otwieramy port
         ServerSocket serverSocket = new ServerSocket(1235);
-        System.out.println("Waiting for connection from client");
-        Socket socket = serverSocket.accept();
-        BufferedWriter socketOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        Scanner socketIn = new Scanner(socket.getInputStream());
-        Scanner scanner = new Scanner(System.in); //skaner do czytanie od usera-serwera
 
-        Board board = new Board();
-
+        //serwer bedzie dzialal w nieskonczonej petli
+        //po zakonczonej grze bedzie oczekiwal na kolejne polaczenie od klienta
         boolean flag = true;
-        System.out.println("You are first");
-        boolean status;
+        while (flag) {
 
-        while (!board.isGameFinished()) {
+            //nasluchujemy az do momentu kiedy jakis klient sie podlaczy
+            System.out.println("Waiting for connection from client");
+            Socket socket = serverSocket.accept();
+            System.out.println("Connection established");
 
-            System.out.println("Current board:");
+            //writer do wypisywania na zewnatrz
+            BufferedWriter socketOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+            //skaner do czytania wiadomosci od klienta
+            Scanner socketIn = new Scanner(socket.getInputStream());
+
+            //skaner do czytanie od usera-serwera
+            Scanner scanner = new Scanner(System.in);
+
+            Board board = new Board();
+
+            System.out.println("You are first");
+
+            //petla tak dlugo dopoki gra sie nie skonczy
+            while (!board.isGameFinished()) {
+
+                System.out.println("Current board:");
+                System.out.println(board);
+
+                //serwer zaczyna gre i ma parzyste ruchy
+                if (board.getNumberOfSuccessfulMoves() % 2 == 0) {
+                    yourTurn(socketOut, scanner, board);
+                } else {
+                    opponentsTurn(socketIn, board);
+                }
+            }
+            System.out.println("Final board:");
             System.out.println(board);
 
-            if (board.getNumberOfSuccessfulMoves() % 2 == 0) {
-                yourTurn(socketOut, scanner, board);
+            System.out.println("Finisking connection");
+            socket.close();
+        }//od duzego while
 
-            } else {
-                opponentsTurn(socketIn, board);
-            }
-
-
-
-        }
-
-        System.out.println("Final board:");
-        System.out.println(board);
-
-
+        serverSocket.close(); //w tej chwili nieosiagalne
     }
 
     private static void opponentsTurn(Scanner socketIn, Board board) {
-        //jesli wygralem, to kolejnej iteracji zewnetrznej petli nie bedzie
-        //bo zmienilem zmienna flag
-        //ale nie chce tez, zeby obecna iteracja sie dokonczyla
-        //wiec w takiej sytuacji tutaj dodatkowo przerywam zewnetrzna petle
-        //if (!flag) break;
-
         //czekamy na pozycje od klienta i te pozycje wpisujemy na board i zaznaczamy koleczkiem
         String oponentPosition = socketIn.nextLine();
         board.addMove(Integer.valueOf(oponentPosition), "O");
-
-        //sprawdzenie, czy po moim rochu od klienta koniec gry
-        //jesli nastapil, to wychodze z gry
-                /*
-                flag = !board.isGameFinished();
-                if (!flag) {
-                    String message = (board.getNumberOfSuccessfulMoves() == 9) ? "End of game - draw." : "End of game! You have lost :(";
-                    System.out.println(message);
-                    break;
-                }
-                */
     }
 
     private static void yourTurn(BufferedWriter socketOut, Scanner scanner, Board board) throws IOException {
         boolean status;
-        //wyswietlenie tablicy
-        //System.out.println("Updated board from client:");
-        //System.out.println(board.toString());
 
         do {
-
             System.out.println("Insert position: ");
 
             //zaczytanie pozycji od gracza-serwera
@@ -92,25 +85,9 @@ public class KikServer {
             status = board.addMove(Integer.valueOf(number), "X");
 
             if (status) {
-                //wyswietlenie zaktualizowanego boardu
-                //System.out.println("Current board:");
-                //System.out.println(board);
-
-                //wysylamy klientowi pozycje, ktora wybralismy
+                //jesli udalo sie poprawnie dodac pozycje do tablicy to wysylamy klientowi te pozycje
                 socketOut.write(number + "\n");
                 socketOut.flush();
-
-                //sprawdzenie, czy po moim rochu nie nastapil koniec gry
-                //jesli nastapil, to wychodze z gry
-                /*
-                flag = !board.isGameFinished();
-                if (!flag) {
-                    String message = (board.getNumberOfSuccessfulMoves() == 9) ? "End of game - draw." : "End of game! You win!";
-                    System.out.println(message);
-                    break; //wyjscie z wewnetrznej petli
-                }
-                */
-
             } else {
                 System.out.println("Invalid position, insert again: ");
             }

@@ -8,24 +8,36 @@ import java.util.Scanner;
 
 /**
  * Created by RENT on 2017-06-21.
+ *
+ * klient laczy sie do serwera i czeka na jego pierwszy ruch
+ * klient dodaje "O" do tablicy
  */
 public class KikClient {
     public static void main(String[] args) throws IOException {
 
+        //tworzymy socket, podlaczamy sie do serwera
         Socket socket = new Socket("localhost", 1235);
+
+        //writer do wypisywania na zewnatrz
         BufferedWriter socketOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+        //skaner do czytania tego co do nas przychodzi, czyli skaner tego co przychodzi do nas od Serwera
         Scanner socketIn = new Scanner(socket.getInputStream());
-        Scanner scanner = new Scanner(System.in); //skaner do czytanie od usera-klienta
+
+        //skaner do czytanie od usera-klienta
+        Scanner scanner = new Scanner(System.in);
 
         Board board = new Board();
 
-        boolean flag = true;
         System.out.println("Waiting for first move from serwer");
+
+        //petla tak dlugo dopoki gra sie nie skonczy
         while (!board.isGameFinished()) {
 
             System.out.println("Current board:");
             System.out.println(board);
 
+            //klient ma nieparzyste ruchy, czyli gre zaczyna serwer
             if (board.getNumberOfSuccessfulMoves() % 2 == 1) {
                 yourTurn(socketOut, scanner, board);
             } else {
@@ -40,32 +52,22 @@ public class KikClient {
 
     private static void yourTurn(BufferedWriter socketOut, Scanner scanner, Board board) throws IOException {
         boolean status;
+
         do {
-            //klient podaje swoja pozycje
             System.out.println("Insert position: ");
 
-            //przerabiam podana pozycje na Integer
+            //zaczytanie pozycji od gracza-klienta
             String ourPosition = scanner.nextLine();
             Integer ourPositionNumber = Integer.valueOf(ourPosition);
 
             //próba dodania pozycji do tablicy
             status = board.addMove(ourPositionNumber, "O");
+
+
             if (status) {
-                //udało sie, wiec wyslanie naszje pozycji userowi-serwerowi
+                //jesli udalo sie poprawnie dodac pozycje do tablicy to wysylamy serwerowi te pozycje
                 socketOut.write(ourPositionNumber + "\n");
                 socketOut.flush();
-
-                //sprawdzenie, czy po moim rochu nie nastapil koniec gry
-                //jesli nastapil, to wychodze z gry
-                /*
-                flag = !board.isGameFinished();
-                if (!flag) {
-                    String message = (board.getNumberOfSuccessfulMoves() == 9) ? "End of game - draw." : "End of game! You win!";
-                    System.out.println(message);
-                    break; //wyjscie z wewnetrznej petli
-                }
-                */
-
             } else {
                 System.out.println("Invalid position, insert again: ");
             }
@@ -79,20 +81,5 @@ public class KikClient {
         //dodanie pozycji do tablicy
         Integer position = Integer.valueOf(oponentPosition);
         board.addMove(position, "X");
-
-        //wyswietlenie tablicy
-        //System.out.println("Updated board from serwer");
-        //System.out.println(board);
-
-        //sprawdzenie, czy po od serwera nie nastapil koniec gry
-        //jesli nastapil, to wychodze z gry
-            /*
-            flag = !board.isGameFinished();
-            if (!flag) {
-                String message = (board.getNumberOfSuccessfulMoves() == 9) ? "End of game - draw." : "End of game! You have lost :(";
-                System.out.println(message);
-                break;
-            }
-            */
     }
 }

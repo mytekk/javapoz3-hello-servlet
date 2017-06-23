@@ -4,6 +4,7 @@ package com.sda.threads;
  * Created by RENT on 2017-06-22.
  *
  * zwykla klasa implementujaca interfejs  runable - dzieki niemu moge stworzyc wątek
+ * ta klasa w metodzie run wypisuje jakis komunikat
  */
 public class MyTask implements Runnable {
 

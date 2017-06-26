@@ -3,6 +3,7 @@ package com.sda.counter;
 /**
  * Created by RENT on 2017-06-23.
  *
+ * klasa implementujaca interfejs  runable - moze byc wykonywana na watkach
  * bierze liczbe, sprawdza czy jest parzysta i jesli tak to zwieksza counter w klasie CounterSummaryService
  */
 public class CounterTask implements Runnable {

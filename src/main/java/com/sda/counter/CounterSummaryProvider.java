@@ -14,7 +14,6 @@ import java.util.Random;
 public class CounterSummaryProvider {
 
     private List<Integer> list;
-    private int indexOfCheckedElement = 0;
     private Iterator<Integer> iterator;
 
     private static CounterSummaryProvider ourInstance = new CounterSummaryProvider();
@@ -44,10 +43,11 @@ public class CounterSummaryProvider {
         return list;
     }
 
-    //metoda zwracajaca kolejną wartośćdo sprawdzenia
-    //z tejmetody beda korzystalo wiele watkow na raz
-    //najpierwbiore pierwszy element, drugi, trzeci, az do konca listy
-    //to, ktory element zwrocic przechowuje w osobnympolu tej klasy
+    //metoda zwracajaca kolejną wartość do sprawdzenia
+    //z tej metody bedzie korzystalo wiele watkow na raz
+    //najpierw biore pierwszy element, drugi, trzeci, az do konca listy
+    //to, ktory element zwrocic przechowuje w osobnym polu tej klasy
+    //wersja lepsza: zaatwia to samo za pomoca iteratora!!!
     public synchronized int getNextValue() {
         //moja wersja
         /*

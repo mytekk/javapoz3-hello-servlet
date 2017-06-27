@@ -10,9 +10,10 @@ import java.util.Map;
  */
 public class ChatUsersStorage {
 
-    private Map<String, ChatConnectionFacade> users; //mapa "nickname - polaczenie"
+    private Map<String, ChatConnectionFacade> users; //mapa zawierająca pary: "nickname - (socketIn + socketOut + ewentualnie nick)"
 
     public ChatUsersStorage() {
+
         users = new HashMap<>();
     }
 
@@ -25,7 +26,10 @@ public class ChatUsersStorage {
         return flag;
     }
 
+    //nasza metoda get zwraca "mapową" metodę get, która zwraca obiekt klasy ChatConnectionFacade
+    //czyli obiekt zawierajacy (socketIn + socketOut + ewentualnie nick)
     public ChatConnectionFacade get(String nickname) {
+
         return users.get(nickname);
     }
 }

@@ -7,13 +7,11 @@ import java.util.Scanner;
 /**
  * Created by RENT on 2017-06-26.
  *
- * ta klasa symbolizuje polaczenie do uzytkownika
- * dostarcza mozliwosc pisania i czytania
+ * ta klasa dostarcza mozliwosc pisania i czytania: potrafi wyslac message
+ * do danego usera, a konkretniej do danego BufferedWritera, ktorego otrzyma we wlasnym konstruktrze
+ * oprocz tego w konstruktorze przychodzi skaner, ktory czyta wiadomosci od usera
  *
- * potrafi wyslac message do danego usera, a konkretniej do danego
- * BufferedWritera, ktorego otrzyma we wlasnym konstruktrze
- *
- * nasza fasada przedstawia proste metody, obudowuje skomplikowane rzeczy w metody read i write
+ * nasza fasada przedstawia proste metody: obudowuje skomplikowane rzeczy w proste metody read i write
  *
  */
 public class ChatConnectionFacade {
@@ -35,12 +33,14 @@ public class ChatConnectionFacade {
         this.out = out;
     }
 
+    //wypisuje na konsole tekst. Tekst pochodzic bedzie od uzytkownika
     public void write(String message) throws IOException {
         System.out.println(nickName + ": " + message);
         out.write(message + "\n");
         out.flush();
     }
 
+    //czyta tekst od usera i zwraca go
     public String read() {
         return in.nextLine();
     }

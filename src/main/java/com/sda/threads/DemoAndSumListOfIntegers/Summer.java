@@ -1,4 +1,4 @@
-package com.sda.threads;
+package com.sda.threads.DemoAndSumListOfIntegers;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 <web-app>
     <servlet>
         <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>com.sda.HelloServlet</servlet-class>
+        <servlet-class>com.sda.servlets.HelloServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -11,7 +11,7 @@
 
     <servlet> <!--sluzy do definiowania servetow-->
         <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>com.sda.HomeServlet</servlet-class> <!--sciezka do klasy razem z pakietem; PPM- copy reference-->
+        <servlet-class>com.sda.servlets.HomeServlet</servlet-class> <!--sciezka do klasy razem z pakietem; PPM- copy reference-->
     </servlet>
 
     <servlet-mapping>
@@ -22,7 +22,7 @@
 
     <servlet>
         <servlet-name>TodoServlet</servlet-name>
-        <servlet-class>com.sda.todo.TodoServlet</servlet-class>
+        <servlet-class>com.sda.servlets.todo.TodoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

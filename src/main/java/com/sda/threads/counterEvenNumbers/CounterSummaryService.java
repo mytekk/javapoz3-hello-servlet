@@ -1,4 +1,4 @@
-package com.sda.counter;
+package com.sda.threads.counterEvenNumbers;
 
 /**
  * Created by RENT on 2017-06-23.

@@ -1,10 +1,10 @@
-package com.sda.counter;
+package com.sda.threads.counterEvenNumbers;
 
 /**
  * Created by RENT on 2017-06-23.
  *
  * klasa implementujaca interfejs  runable - moze byc wykonywana na watkach
- * bierze liczbe, sprawdza czy jest parzysta i jesli tak to zwieksza counter w klasie CounterSummaryService
+ * bierze liczbe, sprawdza czy jest parzysta i jesli tak to zwieksza counterEvenNumbers w klasie CounterSummaryService
  */
 public class CounterTask implements Runnable {
 
@@ -23,7 +23,7 @@ public class CounterTask implements Runnable {
             //System.out.print("\nSprawdzam wartosc: " + valueToCheck);
 
             //sprawdzam, czy pobrana wartosc jest parzysta
-            //jesli jest, to podbijam counter
+            //jesli jest, to podbijam counterEvenNumbers
             if (valueToCheck % 2 == 0) {
                 service.incementCounter();
                 //System.out.println(" ta wartosc jest parzysta\n");

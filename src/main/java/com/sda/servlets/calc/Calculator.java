@@ -1,4 +1,4 @@
-package com.sda.calc;
+package com.sda.servlets.calc;
 
 public class Calculator {
 

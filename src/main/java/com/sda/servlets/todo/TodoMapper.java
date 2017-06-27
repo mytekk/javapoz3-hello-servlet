@@ -1,8 +1,7 @@
-package com.sda.todo;
+package com.sda.servlets.todo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
-package com.sda;
+package com.sda.servlets;
 
-import com.sda.calc.Calculator;
+import com.sda.servlets.calc.Calculator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 public class HelloServlet extends HttpServlet {

@@ -1,4 +1,4 @@
-package com.sda;
+package com.sda.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

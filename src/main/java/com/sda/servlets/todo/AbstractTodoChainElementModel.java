@@ -1,4 +1,4 @@
-package com.sda.todo;
+package com.sda.servlets.todo;
 
 /**
  * Created by mytek on 2017-06-12.

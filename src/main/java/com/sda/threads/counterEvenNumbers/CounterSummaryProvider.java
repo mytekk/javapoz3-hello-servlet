@@ -1,4 +1,4 @@
-package com.sda.counter;
+package com.sda.threads.counterEvenNumbers;
 
 import java.util.ArrayList;
 import java.util.Iterator;

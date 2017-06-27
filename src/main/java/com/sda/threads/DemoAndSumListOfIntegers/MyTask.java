@@ -1,4 +1,4 @@
-package com.sda.threads;
+package com.sda.threads.DemoAndSumListOfIntegers;
 
 /**
  * Created by RENT on 2017-06-22.

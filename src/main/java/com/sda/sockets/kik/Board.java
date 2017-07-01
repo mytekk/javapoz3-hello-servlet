@@ -102,6 +102,13 @@ public class Board {
         return (array[4] != null) && (checkFirstDiagonal() || checkSecondDiagonal());
     }
 
+    public void resetBoard() {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = null;
+        }
+        numberOfSuccessfulMoves = 0;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
